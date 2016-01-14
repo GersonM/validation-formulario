@@ -5,6 +5,8 @@ function initPage() {
     $('#myForm').validate({
         submitHandler: function(form) {
             enviarFormulario();
+
+            return false;
         },
         invalidHandler: function(event, validator) {
             console.log(validator);
@@ -13,7 +15,7 @@ function initPage() {
     });
 }
 
-function enviarFormulario(evt)
+function enviarFormulario()
 {
     var Cliente = Parse.Object.extend("Cliente");
 
@@ -27,8 +29,6 @@ function enviarFormulario(evt)
         $('#apellido').val("");
         swal('Ya está mi amo', 'tus ordenes fueron realizadas', 'success');
     });
-
-    evt.preventDefault();
 }
 
 $(document).ready(initPage);
