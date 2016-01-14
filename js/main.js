@@ -1,46 +1,35 @@
+function initPage() {
+    Parse.initialize("5I2wzgofeQj5dcXGKEdeS77MJ3uwMXixefKk8gHI", "tTly4wCBQacqCJ5MEPCbrV3ZO7htcEuMo9NhUJ0e");
+
+
+    $('#myForm').validate({
+        submitHandler: function(form) {
+            enviarFormulario();
+        },
+        invalidHandler: function(event, validator) {
+            console.log(validator);
+            swal('Error!', 'sd', 'warning');
+        }
+    });
+}
+
+function enviarFormulario(evt)
+{
+    var Cliente = Parse.Object.extend("Cliente");
+
+    var instancia = new Cliente();
+
+    instancia.save({
+        nombre:$('#nombre').val(),
+        apellido:$('#apellido').val()
+    }).then(function(){
+        $('#nombre').val("");
+        $('#apellido').val("");
+        swal('Ya está mi amo', 'tus ordenes fueron realizadas', 'success');
+    });
+
+    evt.preventDefault();
+}
+
 $(document).ready(initPage);
 
-function initPage()
-{
-	var opciones = {
-		rules:{
-			nombre:{
-				required:true,
-				minlength:6
-			},
-			apellidos:"required",
-			email:{
-				required:true
-			},
-			password:
-			{
-				required:true,
-				minlength:6,
-				maxlength:12
-			}
-		},
-		messages:{
-			nombre:"Por favor ingresa tu nombre",
-			apellidos:"Tu apellido también pues",
-			email:{
-				required:"Necesito tu correo"			},
-			password:
-			{
-				required:"Pon tu contraseña",
-				minlength:"Tu contraseña debe tener como mínimo 6 caracteres",
-				maxlength:"Máximo 12"
-			}
-		},
-		submitHandler: function()
-		{
-			swal("Es válido", "Todo ok", "success");
-		},
-		invalidHandler: function()
-		{
-			swal("Error", "Verifica el fomulario", "warning");
-		}
-	};
-
-
-	$("#myForm").validate(opciones);
-}
